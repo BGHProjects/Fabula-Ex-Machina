@@ -1,95 +1,49 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+"use client";
 
-export default function Home() {
+import { Center } from "@chakra-ui/react";
+import dynamic from "next/dynamic";
+import frag from "@/p5/frag";
+import vert from "@/p5/vert";
+//@ts-ignore
+import { NextReactP5Wrapper } from "@p5-wrapper/next";
+//@ts-ignore
+import { Sketch } from "@p5-wrapper/react";
+import MySketch from "@/p5/MyP5Sketch";
+// import MySketch from "@/p5/other";
+
+// Will only import `react-p5` on client-side
+// const Sketch = dynamic(() => import("react-p5").then((mod) => mod.default), {
+//   ssr: false,
+// });
+
+const Home = () => {
+  // See annotations in JS for more information
+  // const setup = (p5: p5Types, canvasParentRef: Element) => {
+  //   p5.createCanvas(500, 500).parent(canvasParentRef);
+  // };
+
+  // const sketch = (p5: any) => {
+
+  //   p5.setup = () => p5.createCanvas(600, 400, p5.WEBGL);
+
+  //   p5.draw = () => {
+  //     p5.background(250);
+  //     p5.normalMaterial();
+  //     p5.push();
+  //     p5.rotateZ(p5.frameCount * 0.01);
+  //     p5.rotateX(p5.frameCount * 0.01);
+  //     p5.rotateY(p5.frameCount * 0.01);
+  //     p5.plane(100);
+  //     p5.pop();
+  //   };
+  // };
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <Center w="100vw" h="100vh" bg="black">
+      {/* <NextReactP5Wrapper sketch={sketch} /> */}
+      <MySketch />
+    </Center>
+  );
+};
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
-}
+export default Home;
