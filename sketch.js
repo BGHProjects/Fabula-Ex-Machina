@@ -47,11 +47,11 @@ void main()
     uv=uv/15.0;
     vec3 col = vec3(0.25);
 
-     for(int i = 0; i < 30; i++){
+     for(int i = 0; i < 35; i++){
         float i2 = float(i)*0.5;
-        col.r +=noise(uv.xyy*(1.0+i2)+col.rgb/1.0+t*sin(cos(i2/0.1)));
-        col.g+=noise(uv.xyx*(1.0+i2)+col.rgb/1.0+t*sin(sin(i2/0.1)));
-        col.b+=noise(uv.yyx*(0.3+i2)+col.rgb/1.0+t*sin(cos(i2/0.1)));
+        col.b += noise(uv.xyy*(0.3+i2)+col.rgb/1.0+t*sin(sin(i2/0.1)));
+        col.g += noise(uv.xyx*(1.0+i2)+col.rgb/1.0+t*cos(cos(i2/0.1)));
+        col.r += noise(uv.yyx*(1.0+i2)+col.rgb/1.0+t*sin(sin(i2/0.1)));
     }
                 
     col.rgb/=0.1;
@@ -104,7 +104,7 @@ function draw() {
   shader(theShader);
 
   theShader.setUniform("u_resolution", [width * 2, height * 2]);
-  theShader.setUniform("u_time", millis() / 5000.0);
+  theShader.setUniform("u_time", 3 + millis() / 5000.0);
   theShader.setUniform("u_frame", frameCount * 2.0);
 
   // rect gives us some geometry on the screen

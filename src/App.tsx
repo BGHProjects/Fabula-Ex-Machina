@@ -1,21 +1,30 @@
-import { Center, Text } from "@chakra-ui/react";
+import Home from "./pages/Home";
+import LoadingPage from "./pages/LoadingPage";
+import { useEffect, useState } from "react";
 
 const App = () => {
-  return (
-    <Center
-      bg="rgba(0,0,0,0)"
-      w="100vw"
-      h="100vh"
-      position="absolute"
-      zIndex="1"
-    >
-      <Center h="50vh" w="100vw" bg="rgba(0,0,0,0.9)">
-        <Text color="white" textAlign="center" fontSize="40px">
-          FABULA EX MACHINA
-        </Text>
-      </Center>
-    </Center>
-  );
+  const [isFontLoaded, setIsFontLoaded] = useState(false);
+
+  const checkFontLoad = async () => {
+    const font = new FontFace(
+      "Ysabeau Infant",
+      'url("/assets/fonts/Ysabeau_Infant/static/YsabeauInfant-Regular.ttf")'
+    );
+
+    try {
+      await font.load();
+      document.fonts.add(font);
+      setIsFontLoaded(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    checkFontLoad();
+  }, []);
+
+  return isFontLoaded ? <Home /> : <LoadingPage />;
 };
 
 export default App;
