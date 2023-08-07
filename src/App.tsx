@@ -7,7 +7,7 @@ const App = () => {
 
   const checkFontLoad = async () => {
     const font = new FontFace(
-      "Ysabeau Infant",
+      "YsabeauInfant",
       'url("/assets/fonts/Ysabeau_Infant/static/YsabeauInfant-Regular.ttf")'
     );
 

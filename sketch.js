@@ -47,7 +47,7 @@ void main()
     uv=uv/15.0;
     vec3 col = vec3(0.25);
 
-     for(int i = 0; i < 35; i++){
+     for(int i = 0; i < 25; i++){
         float i2 = float(i)*0.5;
         col.b += noise(uv.xyy*(0.3+i2)+col.rgb/1.0+t*sin(sin(i2/0.1)));
         col.g += noise(uv.xyx*(1.0+i2)+col.rgb/1.0+t*cos(cos(i2/0.1)));
