@@ -1,6 +1,6 @@
+import { Flex } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { useAppContext } from "../contexts/AppStateContext";
-import { Center, Flex } from "@chakra-ui/react";
 import BackButton from "./BackButton";
 
 const screenTransitionDuration = 1;
@@ -16,7 +16,7 @@ const GameplayContainer = () => {
           width: "80vw",
           maxWidth: "1200px",
           height: "0vh",
-          backgroundColor: "rgba(0,0,0,1)",
+          backgroundColor: "rgba(0,0,0,0.9)",
           zIndex: 3,
         }}
         animate={{

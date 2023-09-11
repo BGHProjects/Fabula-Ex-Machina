@@ -28,7 +28,7 @@ const Home = () => {
       <MainMenuContainer
         initial={{ opacity: 1, display: "flex" }}
         animate={{
-          opacity: playingGame ? [1, 0] : 1,
+          opacity: playingGame ? [1, 0] : [0, 1],
           display: playingGame ? ["flex", "none"] : "flex",
         }}
         // @ts-ignore
@@ -38,6 +38,7 @@ const Home = () => {
             delay: 1,
           },
           opacity: {
+            delay: !playingGame ? 1 : 0,
             duration: 1,
           },
         }}
