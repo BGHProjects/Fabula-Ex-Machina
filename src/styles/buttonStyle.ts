@@ -15,7 +15,6 @@ const buttonStyle = (width: number, height: number) => {
     border: "3px solid white",
     zIndex: "2",
     position: "relative",
-    opacity: 0,
     cursor: "pointer",
   };
 };

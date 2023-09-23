@@ -10,6 +10,16 @@ import {
 interface IAppStateContext {
   playingGame: boolean;
   setPlayingGame: Dispatch<SetStateAction<boolean>>;
+  apiKey: string | undefined;
+  setAPIKey: Dispatch<SetStateAction<string | undefined>>;
+  storyTitle: string | undefined;
+  setStoryTitle: Dispatch<SetStateAction<string | undefined>>;
+  act1Prompt: string | undefined;
+  setAct1Prompt: Dispatch<SetStateAction<string | undefined>>;
+  act2Prompt: string | undefined;
+  setAct2Prompt: Dispatch<SetStateAction<string | undefined>>;
+  act3Prompt: string | undefined;
+  setAct3Prompt: Dispatch<SetStateAction<string | undefined>>;
 }
 
 const AppStateContext = createContext<IAppStateContext>({} as IAppStateContext);
@@ -20,12 +30,27 @@ const AppStateContextProvider = ({
   children: ReactNode | ReactNode[];
 }) => {
   const [playingGame, setPlayingGame] = useState(false);
+  const [apiKey, setAPIKey] = useState<string | undefined>(undefined);
+  const [storyTitle, setStoryTitle] = useState<string | undefined>(undefined);
+  const [act1Prompt, setAct1Prompt] = useState<string | undefined>(undefined);
+  const [act2Prompt, setAct2Prompt] = useState<string | undefined>(undefined);
+  const [act3Prompt, setAct3Prompt] = useState<string | undefined>(undefined);
 
   return (
     <AppStateContext.Provider
       value={{
         playingGame,
         setPlayingGame,
+        apiKey,
+        setAPIKey,
+        storyTitle,
+        setStoryTitle,
+        act1Prompt,
+        setAct1Prompt,
+        act2Prompt,
+        setAct2Prompt,
+        act3Prompt,
+        setAct3Prompt,
       }}
     >
       {children}
