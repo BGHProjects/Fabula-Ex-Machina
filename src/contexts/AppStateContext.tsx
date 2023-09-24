@@ -12,6 +12,10 @@ interface IAppStateContext {
   setPlayingGame: Dispatch<SetStateAction<boolean>>;
   apiKey: string | undefined;
   setAPIKey: Dispatch<SetStateAction<string | undefined>>;
+  generating: boolean;
+  setGenerating: Dispatch<SetStateAction<boolean>>;
+  generatingFinished: boolean;
+  setGeneratingFinished: Dispatch<SetStateAction<boolean>>;
   storyTitle: string | undefined;
   setStoryTitle: Dispatch<SetStateAction<string | undefined>>;
   act1Prompt: string | undefined;
@@ -30,6 +34,8 @@ const AppStateContextProvider = ({
   children: ReactNode | ReactNode[];
 }) => {
   const [playingGame, setPlayingGame] = useState(false);
+  const [generating, setGenerating] = useState(false);
+  const [generatingFinished, setGeneratingFinished] = useState(false);
   const [apiKey, setAPIKey] = useState<string | undefined>(undefined);
   const [storyTitle, setStoryTitle] = useState<string | undefined>(undefined);
   const [act1Prompt, setAct1Prompt] = useState<string | undefined>(undefined);
@@ -43,6 +49,10 @@ const AppStateContextProvider = ({
         setPlayingGame,
         apiKey,
         setAPIKey,
+        generating,
+        setGenerating,
+        generatingFinished,
+        setGeneratingFinished,
         storyTitle,
         setStoryTitle,
         act1Prompt,

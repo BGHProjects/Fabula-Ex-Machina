@@ -2,9 +2,10 @@ import { Flex, useToast } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { useAppContext } from "../contexts/AppStateContext";
 import BackButton from "./BackButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import APIKeySubmission from "./APIKeySubmission";
 import StoryTitleSubmission from "./StoryTitleSubmission";
+import GeneratingLoadingUI from "./GeneratingLoadingUI";
 
 const screenTransitionDuration = 1;
 
@@ -18,6 +19,9 @@ const GameplayContainer = () => {
     setAPIKey,
     storyTitle,
     setStoryTitle,
+    generating,
+    setGenerating,
+    setGeneratingFinished,
   } = useAppContext();
   const [apiInput, setAPIInput] = useState<string | undefined>(undefined);
   const [submittingAPIKey, setSubmittingAPIKey] = useState(false);
@@ -64,7 +68,22 @@ const GameplayContainer = () => {
       setStoryTitle(storyTitleInput);
       setStoryTitleInput(undefined);
       setSubmittingStoryTitle(false);
+      setGenerating(true);
     }, screenTransitionDuration * 1000);
+  };
+
+  useEffect(() => {
+    if (generating) generate();
+  }, [generating]);
+
+  // Just used for testing purposes
+  const generate = () => {
+    setTimeout(() => {
+      setGeneratingFinished(true);
+      setTimeout(() => {
+        setGenerating(false);
+      }, 1000);
+    }, 1000);
   };
 
   return (
@@ -124,6 +143,13 @@ const GameplayContainer = () => {
                   screenTransitionDuration={screenTransitionDuration}
                   setStoryTitleInput={setStoryTitleInput}
                   handleSubmitStoryTitle={handleSubmitStoryTitle}
+                />
+              )}
+
+              {generating && (
+                <GeneratingLoadingUI
+                  label={"the introduction of your story"}
+                  screenTransitionDuration={screenTransitionDuration}
                 />
               )}
             </motion.div>
