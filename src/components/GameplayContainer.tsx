@@ -1,78 +1,78 @@
-import { Flex, useToast } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { useAppContext } from "../contexts/AppStateContext";
 import BackButton from "./BackButton";
-import { useEffect, useState } from "react";
-import APIKeySubmission from "./APIKeySubmission";
-import StoryTitleSubmission from "./StoryTitleSubmission";
-import GeneratingLoadingUI from "./GeneratingLoadingUI";
+import { useEffect } from "react";
+// import APIKeySubmission from "./APIKeySubmission";
+// import StoryTitleSubmission from "./StoryTitleSubmission";
+// import GeneratingLoadingUI from "./GeneratingLoadingUI";
 import CurrentArcUI from "./CurrentArcUI";
 
 const screenTransitionDuration = 1;
 
 const GameplayContainer = () => {
-  const toast = useToast();
+  // const toast = useToast();
 
   const {
     playingGame,
     setPlayingGame,
-    apiKey,
-    setAPIKey,
-    storyTitle,
-    setStoryTitle,
+    // apiKey,
+    // setAPIKey,
+    // storyTitle,
+    // setStoryTitle,
     generating,
     setGenerating,
     setGeneratingFinished,
-    handleSubmitStoryTitle,
+    // handleSubmitStoryTitle,
   } = useAppContext();
-  const [apiInput, setAPIInput] = useState<string | undefined>(undefined);
-  const [submittingAPIKey, setSubmittingAPIKey] = useState(false);
+  // const [apiInput, setAPIInput] = useState<string | undefined>(undefined);
+  // const [submittingAPIKey, setSubmittingAPIKey] = useState(false);
 
-  const [storyTitleInput, setStoryTitleInput] = useState<string | undefined>(
-    undefined
-  );
-  const [submittingStoryTitle, setSubmittingStoryTitle] = useState(false);
+  // const [storyTitleInput, setStoryTitleInput] = useState<string | undefined>(
+  //   undefined
+  // );
+  // const [submittingStoryTitle, setSubmittingStoryTitle] = useState(false);
 
-  const handleSubmitAPIKey = () => {
-    if (!apiInput) {
-      toast({
-        title: "Invalid API Key",
-        description: "Please submit a valid API key",
-        status: "error",
-      });
+  // const handleSubmitAPIKey = () => {
+  //   if (!apiInput) {
+  //     toast({
+  //       title: "Invalid API Key",
+  //       description: "Please submit a valid API key",
+  //       status: "error",
+  //     });
 
-      return;
-    }
+  //     return;
+  //   }
 
-    setSubmittingAPIKey(true);
+  //   setSubmittingAPIKey(true);
 
-    setTimeout(() => {
-      setAPIKey(apiInput);
-      setAPIInput(undefined);
-      setSubmittingAPIKey(false);
-    }, screenTransitionDuration * 1000);
-  };
+  //   setTimeout(() => {
+  //     setAPIKey(apiInput);
+  //     setAPIInput(undefined);
+  //     setSubmittingAPIKey(false);
+  //   }, screenTransitionDuration * 1000);
+  // };
 
-  const handleStoryTitleInput = () => {
-    if (!storyTitleInput) {
-      toast({
-        title: "Invalid Story Title",
-        description: "Please submit a valid story title",
-        status: "error",
-      });
+  // const handleStoryTitleInput = () => {
+  //   if (!storyTitleInput) {
+  //     toast({
+  //       title: "Invalid Story Title",
+  //       description: "Please submit a valid story title",
+  //       status: "error",
+  //     });
 
-      return;
-    }
+  //     return;
+  //   }
 
-    setSubmittingStoryTitle(true);
+  //   setSubmittingStoryTitle(true);
 
-    setTimeout(() => {
-      handleSubmitStoryTitle(storyTitleInput);
-      setStoryTitleInput(undefined);
-      setSubmittingStoryTitle(false);
-      setGenerating(true);
-    }, screenTransitionDuration * 1000);
-  };
+  //   setTimeout(() => {
+  //     handleSubmitStoryTitle(storyTitleInput);
+  //     setStoryTitleInput(undefined);
+  //     setSubmittingStoryTitle(false);
+  //     setGenerating(true);
+  //   }, screenTransitionDuration * 1000);
+  // };
 
   useEffect(() => {
     if (generating) generate();

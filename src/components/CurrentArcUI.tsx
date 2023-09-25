@@ -10,13 +10,13 @@ import { useState } from "react";
  */
 const CurrentArcUI = () => {
   const {
-    act1Prompt,
+    // act1Prompt,
     setAct1Prompt,
-    act2Prompt,
+    // act2Prompt,
     setAct2Prompt,
-    act3Prompt,
+    // act3Prompt,
     setAct3Prompt,
-    intro,
+    // intro,
     act1Content,
     act2Content,
     act3Content,

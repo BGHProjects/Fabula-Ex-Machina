@@ -58,7 +58,7 @@ const AppStateContextProvider = ({
 
   const handleGenerateAct = (whichAct: number, prompt: string) => {
     // Generate the act of the story
-    const result = "content";
+    const result = prompt;
 
     if (whichAct === 3) setAct3Content(result);
     if (whichAct === 2) setAct2Content(result);
@@ -67,7 +67,7 @@ const AppStateContextProvider = ({
 
   const handleSubmitStoryTitle = (storyTitleInput: string) => {
     // Generate the story introduction
-    const result = "content";
+    const result = storyTitleInput;
 
     setStoryTitle(result);
   };
