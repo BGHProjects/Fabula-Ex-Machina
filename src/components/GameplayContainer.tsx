@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import APIKeySubmission from "./APIKeySubmission";
 import StoryTitleSubmission from "./StoryTitleSubmission";
 import GeneratingLoadingUI from "./GeneratingLoadingUI";
+import CurrentArcUI from "./CurrentArcUI";
 
 const screenTransitionDuration = 1;
 
@@ -22,6 +23,7 @@ const GameplayContainer = () => {
     generating,
     setGenerating,
     setGeneratingFinished,
+    handleSubmitStoryTitle,
   } = useAppContext();
   const [apiInput, setAPIInput] = useState<string | undefined>(undefined);
   const [submittingAPIKey, setSubmittingAPIKey] = useState(false);
@@ -51,7 +53,7 @@ const GameplayContainer = () => {
     }, screenTransitionDuration * 1000);
   };
 
-  const handleSubmitStoryTitle = () => {
+  const handleStoryTitleInput = () => {
     if (!storyTitleInput) {
       toast({
         title: "Invalid Story Title",
@@ -65,7 +67,7 @@ const GameplayContainer = () => {
     setSubmittingStoryTitle(true);
 
     setTimeout(() => {
-      setStoryTitle(storyTitleInput);
+      handleSubmitStoryTitle(storyTitleInput);
       setStoryTitleInput(undefined);
       setSubmittingStoryTitle(false);
       setGenerating(true);
@@ -128,7 +130,7 @@ const GameplayContainer = () => {
                 delay: playingGame ? screenTransitionDuration * 2.5 : 0,
               }}
             >
-              {!apiKey && (
+              {/* {!apiKey && (
                 <APIKeySubmission
                   submittingAPIKey={submittingAPIKey}
                   screenTransitionDuration={screenTransitionDuration}
@@ -142,7 +144,7 @@ const GameplayContainer = () => {
                   submittingStoryTitle={submittingStoryTitle}
                   screenTransitionDuration={screenTransitionDuration}
                   setStoryTitleInput={setStoryTitleInput}
-                  handleSubmitStoryTitle={handleSubmitStoryTitle}
+                  handleSubmitStoryTitle={handleStoryTitleInput}
                 />
               )}
 
@@ -151,7 +153,9 @@ const GameplayContainer = () => {
                   label={"the introduction of your story"}
                   screenTransitionDuration={screenTransitionDuration}
                 />
-              )}
+              )} */}
+
+              <CurrentArcUI />
             </motion.div>
           </>
         )}
