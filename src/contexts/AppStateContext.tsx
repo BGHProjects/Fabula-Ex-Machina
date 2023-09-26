@@ -4,8 +4,10 @@ import {
   SetStateAction,
   createContext,
   useContext,
+  useEffect,
   useState,
 } from "react";
+import { loremIpsum } from "../constants/loremIpsum";
 
 interface IAppStateContext {
   playingGame: boolean;
@@ -18,10 +20,11 @@ interface IAppStateContext {
   setGeneratingFinished: Dispatch<SetStateAction<boolean>>;
   storyTitle: string | undefined;
   setStoryTitle: Dispatch<SetStateAction<string | undefined>>;
-  handleSubmitStoryTitle: (storyTitleInput: string) => void;
-  handleGenerateAct: (whichAct: number, prompt: string) => void;
+  handleGenerateAct: (prompt: string) => void;
   intro: string | undefined;
   setIntro: Dispatch<SetStateAction<string | undefined>>;
+  whichAct: number;
+  setWhichAct: Dispatch<SetStateAction<number>>;
   act1Prompt: string | undefined;
   setAct1Prompt: Dispatch<SetStateAction<string | undefined>>;
   act2Prompt: string | undefined;
@@ -55,21 +58,41 @@ const AppStateContextProvider = ({
   const [act1Content, setAct1Content] = useState<string | undefined>(undefined);
   const [act2Content, setAct2Content] = useState<string | undefined>(undefined);
   const [act3Content, setAct3Content] = useState<string | undefined>(undefined);
+  const [whichAct, setWhichAct] = useState(0);
 
-  const handleGenerateAct = (whichAct: number, prompt: string) => {
+  useEffect(() => {
+    console.log("whichAct: ", whichAct);
+  }, [whichAct]);
+
+  const handleGenerateAct = (prompt: string) => {
     // Generate the act of the story
-    const result = prompt;
 
-    if (whichAct === 3) setAct3Content(result);
-    if (whichAct === 2) setAct2Content(result);
-    if (whichAct === 1) setAct1Content(result);
-  };
+    setGenerating(true);
+    setGeneratingFinished(false);
 
-  const handleSubmitStoryTitle = (storyTitleInput: string) => {
-    // Generate the story introduction
-    const result = storyTitleInput;
-
-    setStoryTitle(result);
+    // Just for testing purposes
+    setTimeout(() => {
+      setTimeout(() => {
+        if (whichAct === 3) {
+          setAct3Content("Third Act Content");
+        }
+        if (whichAct === 2) {
+          setAct2Content("Second Act Content");
+          setWhichAct(3);
+        }
+        if (whichAct === 1) {
+          setAct1Content("First Act Content");
+          setWhichAct(2);
+        }
+        if (whichAct === 0) {
+          setStoryTitle(prompt);
+          setIntro(loremIpsum);
+          setWhichAct(1);
+        }
+        setGeneratingFinished(true);
+        setGenerating(false);
+      }, 1000);
+    }, 1000);
   };
 
   return (
@@ -85,7 +108,6 @@ const AppStateContextProvider = ({
         setGeneratingFinished,
         storyTitle,
         setStoryTitle,
-        handleSubmitStoryTitle,
         handleGenerateAct,
         intro,
         setIntro,
@@ -101,6 +123,8 @@ const AppStateContextProvider = ({
         setAct2Content,
         act3Content,
         setAct3Content,
+        whichAct,
+        setWhichAct,
       }}
     >
       {children}

@@ -1,91 +1,75 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, useToast } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { useAppContext } from "../contexts/AppStateContext";
 import BackButton from "./BackButton";
-import { useEffect } from "react";
-// import APIKeySubmission from "./APIKeySubmission";
-// import StoryTitleSubmission from "./StoryTitleSubmission";
-// import GeneratingLoadingUI from "./GeneratingLoadingUI";
+import { useState } from "react";
+import APIKeySubmission from "./APIKeySubmission";
+import StoryTitleSubmission from "./StoryTitleSubmission";
+import GeneratingLoadingUI from "./GeneratingLoadingUI";
 import CurrentArcUI from "./CurrentArcUI";
 
 const screenTransitionDuration = 1;
 
 const GameplayContainer = () => {
-  // const toast = useToast();
+  const toast = useToast();
 
   const {
     playingGame,
     setPlayingGame,
-    // apiKey,
-    // setAPIKey,
-    // storyTitle,
-    // setStoryTitle,
+    apiKey,
+    setAPIKey,
     generating,
     setGenerating,
-    setGeneratingFinished,
-    // handleSubmitStoryTitle,
+    handleGenerateAct,
+    storyTitle,
   } = useAppContext();
-  // const [apiInput, setAPIInput] = useState<string | undefined>(undefined);
-  // const [submittingAPIKey, setSubmittingAPIKey] = useState(false);
+  const [apiInput, setAPIInput] = useState<string | undefined>(undefined);
+  const [submittingAPIKey, setSubmittingAPIKey] = useState(false);
 
-  // const [storyTitleInput, setStoryTitleInput] = useState<string | undefined>(
-  //   undefined
-  // );
-  // const [submittingStoryTitle, setSubmittingStoryTitle] = useState(false);
+  const [storyTitleInput, setStoryTitleInput] = useState<string | undefined>(
+    undefined
+  );
+  const [submittingStoryTitle, setSubmittingStoryTitle] = useState(false);
 
-  // const handleSubmitAPIKey = () => {
-  //   if (!apiInput) {
-  //     toast({
-  //       title: "Invalid API Key",
-  //       description: "Please submit a valid API key",
-  //       status: "error",
-  //     });
+  const handleSubmitAPIKey = () => {
+    if (!apiInput) {
+      toast({
+        title: "Invalid API Key",
+        description: "Please submit a valid API key",
+        status: "error",
+      });
 
-  //     return;
-  //   }
+      return;
+    }
 
-  //   setSubmittingAPIKey(true);
+    setSubmittingAPIKey(true);
 
-  //   setTimeout(() => {
-  //     setAPIKey(apiInput);
-  //     setAPIInput(undefined);
-  //     setSubmittingAPIKey(false);
-  //   }, screenTransitionDuration * 1000);
-  // };
-
-  // const handleStoryTitleInput = () => {
-  //   if (!storyTitleInput) {
-  //     toast({
-  //       title: "Invalid Story Title",
-  //       description: "Please submit a valid story title",
-  //       status: "error",
-  //     });
-
-  //     return;
-  //   }
-
-  //   setSubmittingStoryTitle(true);
-
-  //   setTimeout(() => {
-  //     handleSubmitStoryTitle(storyTitleInput);
-  //     setStoryTitleInput(undefined);
-  //     setSubmittingStoryTitle(false);
-  //     setGenerating(true);
-  //   }, screenTransitionDuration * 1000);
-  // };
-
-  useEffect(() => {
-    if (generating) generate();
-  }, [generating]);
-
-  // Just used for testing purposes
-  const generate = () => {
     setTimeout(() => {
-      setGeneratingFinished(true);
-      setTimeout(() => {
-        setGenerating(false);
-      }, 1000);
-    }, 1000);
+      setAPIKey(apiInput);
+      setAPIInput(undefined);
+      setSubmittingAPIKey(false);
+    }, screenTransitionDuration * 1000);
+  };
+
+  const handleStoryTitleInput = () => {
+    if (!storyTitleInput) {
+      toast({
+        title: "Invalid Story Title",
+        description: "Please submit a valid story title",
+        status: "error",
+      });
+
+      return;
+    }
+
+    setSubmittingStoryTitle(true);
+
+    setTimeout(() => {
+      handleGenerateAct(storyTitleInput);
+      setStoryTitleInput(undefined);
+      setSubmittingStoryTitle(false);
+      setGenerating(true);
+    }, screenTransitionDuration * 1000);
   };
 
   return (
@@ -130,7 +114,7 @@ const GameplayContainer = () => {
                 delay: playingGame ? screenTransitionDuration * 2.5 : 0,
               }}
             >
-              {/* {!apiKey && (
+              {!apiKey && (
                 <APIKeySubmission
                   submittingAPIKey={submittingAPIKey}
                   screenTransitionDuration={screenTransitionDuration}
@@ -153,9 +137,9 @@ const GameplayContainer = () => {
                   label={"the introduction of your story"}
                   screenTransitionDuration={screenTransitionDuration}
                 />
-              )} */}
+              )}
 
-              <CurrentArcUI />
+              {!generating && storyTitle && <CurrentArcUI />}
             </motion.div>
           </>
         )}

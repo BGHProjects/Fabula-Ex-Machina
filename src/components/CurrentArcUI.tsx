@@ -1,7 +1,7 @@
-import { VStack, Text, Flex, Textarea } from "@chakra-ui/react";
+import { VStack, Text, Flex, Textarea, useToast } from "@chakra-ui/react";
 import StaticAppButton from "./StaticAppButton";
 import { useAppContext } from "../contexts/AppStateContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 /**
  * UI displayed  for the current arc of the story
@@ -9,43 +9,44 @@ import { useState } from "react";
  * for the user
  */
 const CurrentArcUI = () => {
-  const {
-    // act1Prompt,
-    setAct1Prompt,
-    // act2Prompt,
-    setAct2Prompt,
-    // act3Prompt,
-    setAct3Prompt,
-    // intro,
-    act1Content,
-    act2Content,
-    act3Content,
-  } = useAppContext();
+  const { handleGenerateAct, whichAct, intro, act1Content, act2Content } =
+    useAppContext();
 
   const [promptInput, setPromptInput] = useState<string | undefined>();
+  const [actDisplayed, setActDisplayed] = useState<string | undefined>();
+
+  const toast = useToast();
 
   const handleSubmit = () => {
-    if (!act3Content) {
-      setAct3Prompt(promptInput);
+    if (!promptInput) {
+      toast({
+        title: "Invalid Prompt",
+        description: "Please submit a valid prompt",
+        status: "error",
+      });
       return;
     }
 
-    if (!act2Content) {
-      setAct2Prompt(promptInput);
-      return;
-    }
-
-    if (!act1Content) {
-      setAct1Prompt(promptInput);
-      return;
-    }
+    handleGenerateAct(promptInput);
   };
+
+  const actContent: Record<number, any> = {
+    1: { promptText: "first", titleText: "Introduction" },
+    2: { promptText: "second", titleText: "Act One" },
+    3: { promptText: "final", titleText: "Act Two" },
+  };
+
+  useEffect(() => {
+    if (whichAct === 1) setActDisplayed(intro);
+    if (whichAct === 2) setActDisplayed(act1Content);
+    if (whichAct === 3) setActDisplayed(act2Content);
+  }, [whichAct]);
 
   return (
     <VStack h="100%" spacing="10" pt="100px">
       <Text fontFamily="YsabeauInfant" color="white" fontSize="28px">
         {" "}
-        Introduction
+        {actContent[whichAct].titleText}
       </Text>
       <Flex
         maxH="45vh"
@@ -68,60 +69,7 @@ const CurrentArcUI = () => {
         }}
       >
         <Text fontFamily="YsabeauInfant" color="white" fontSize="16px">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-          enim orci, efficitur a interdum at, posuere quis orci. Morbi lectus
-          felis, dictum et aliquam et, congue eget purus. Maecenas sollicitudin
-          vitae nunc a tincidunt. Fusce vitae nisi urna. Maecenas dui augue,
-          maximus ac tortor eget, molestie suscipit tellus. Aliquam luctus nisi
-          ante, et pharetra ex consequat ac. Morbi facilisis interdum hendrerit.
-          Praesent pretium, metus nec ornare pretium, arcu purus hendrerit eros,
-          molestie luctus metus ante rutrum tellus. Sed lacus purus, placerat eu
-          molestie vitae, imperdiet vitae mauris. Morbi scelerisque efficitur
-          ipsum sit amet porttitor. Nunc vitae urna non quam varius commodo non
-          in tortor. Curabitur dapibus, mauris eget malesuada tempor, justo orci
-          porttitor metus, eget luctus arcu libero vel ante. Morbi convallis
-          molestie faucibus. Vestibulum tristique ligula ut fringilla fringilla.
-          Nullam dignissim ut velit vitae tristique. Nunc non lacinia augue.
-          Donec gravida, risus eu tincidunt auctor, libero felis consectetur
-          odio, iaculis pretium nulla sem eleifend sem. Integer eu dui purus.
-          Proin tempor sed quam at malesuada. Curabitur ut metus eu tortor
-          pretium faucibus eu vel ante. Donec ornare lectus at neque tincidunt,
-          in molestie lectus tincidunt. Ut nec purus vel arcu tempor porttitor
-          ac nec metus. Fusce eget euismod mauris. Praesent viverra, magna ac
-          pulvinar ullamcorper, felis mi congue metus, id condimentum mauris
-          erat et ante. Donec auctor gravida augue eget facilisis. Etiam tempor,
-          risus et vulputate maximus, massa enim suscipit ipsum, ut tristique
-          ante nibh eget mi. Integer justo magna, cursus id porta nec, elementum
-          in eros. Vestibulum ante ipsum primis in faucibus orci luctus et
-          ultrices posuere cubilia curae; Morbi non tortor nibh. Aliquam
-          vehicula eros nec sem varius tincidunt. Lorem ipsum dolor sit amet,
-          consectetur adipiscing elit. Pellentesque enim orci, efficitur a
-          interdum at, posuere quis orci. Morbi lectus felis, dictum et aliquam
-          et, congue eget purus. Maecenas sollicitudin vitae nunc a tincidunt.
-          Fusce vitae nisi urna. Maecenas dui augue, maximus ac tortor eget,
-          molestie suscipit tellus. Aliquam luctus nisi ante, et pharetra ex
-          consequat ac. Morbi facilisis interdum hendrerit. Praesent pretium,
-          metus nec ornare pretium, arcu purus hendrerit eros, molestie luctus
-          metus ante rutrum tellus. Sed lacus purus, placerat eu molestie vitae,
-          imperdiet vitae mauris. Morbi scelerisque efficitur ipsum sit amet
-          porttitor. Nunc vitae urna non quam varius commodo non in tortor.
-          Curabitur dapibus, mauris eget malesuada tempor, justo orci porttitor
-          metus, eget luctus arcu libero vel ante. Morbi convallis molestie
-          faucibus. Vestibulum tristique ligula ut fringilla fringilla. Nullam
-          dignissim ut velit vitae tristique. Nunc non lacinia augue. Donec
-          gravida, risus eu tincidunt auctor, libero felis consectetur odio,
-          iaculis pretium nulla sem eleifend sem. Integer eu dui purus. Proin
-          tempor sed quam at malesuada. Curabitur ut metus eu tortor pretium
-          faucibus eu vel ante. Donec ornare lectus at neque tincidunt, in
-          molestie lectus tincidunt. Ut nec purus vel arcu tempor porttitor ac
-          nec metus. Fusce eget euismod mauris. Praesent viverra, magna ac
-          pulvinar ullamcorper, felis mi congue metus, id condimentum mauris
-          erat et ante. Donec auctor gravida augue eget facilisis. Etiam tempor,
-          risus et vulputate maximus, massa enim suscipit ipsum, ut tristique
-          ante nibh eget mi. Integer justo magna, cursus id porta nec, elementum
-          in eros. Vestibulum ante ipsum primis in faucibus orci luctus et
-          ultrices posuere cubilia curae; Morbi non tortor nibh. Aliquam
-          vehicula eros nec sem varius tincidunt.
+          {actDisplayed}
         </Text>
       </Flex>
 
@@ -132,7 +80,8 @@ const CurrentArcUI = () => {
           fontSize="20px"
           mb="20px"
         >
-          What happens in the next act of the story?
+          What happens in the {actContent[whichAct].promptText} act of the
+          story?
         </Text>
         <Textarea
           border="2px solid white"
