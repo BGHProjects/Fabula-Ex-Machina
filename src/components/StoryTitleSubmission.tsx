@@ -1,36 +1,58 @@
-import { VStack, Text, Input } from "@chakra-ui/react";
+import { VStack, Text, Input, useToast } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import StaticAppButton from "./StaticAppButton";
-
-interface IStoryTitleSubmission {
-  submittingStoryTitle: boolean;
-  screenTransitionDuration: number;
-  setStoryTitleInput: (arg1: string) => void;
-  handleSubmitStoryTitle: () => void;
-}
+import { useAppContext } from "../contexts/AppStateContext";
+import { useState } from "react";
 
 /**
  * UI Elements that display when the user
  * is prompted to submit the title of their story
  */
-const StoryTitleSubmission = ({
-  submittingStoryTitle,
-  screenTransitionDuration,
-  setStoryTitleInput,
-  handleSubmitStoryTitle,
-}: IStoryTitleSubmission) => {
+const StoryTitleSubmission = () => {
+  const toast = useToast();
+
+  const { setGenerating, handleGenerateAct, apiKey, storyTitle } =
+    useAppContext();
+
+  const [storyTitleInput, setStoryTitleInput] = useState<string | undefined>(
+    undefined
+  );
+  const [submittingStoryTitle, setSubmittingStoryTitle] = useState(false);
+
+  const handleSubmitStoryTitle = () => {
+    if (!storyTitleInput) {
+      toast({
+        title: "Invalid Story Title",
+        description: "Please submit a valid story title",
+        status: "error",
+      });
+
+      return;
+    }
+
+    setSubmittingStoryTitle(true);
+
+    setTimeout(() => {
+      handleGenerateAct(storyTitleInput);
+      setStoryTitleInput(undefined);
+      setSubmittingStoryTitle(false);
+      setGenerating(true);
+    }, 1000);
+  };
+
   return (
     <motion.div
       style={{
         opacity: 0,
+        display: apiKey && !storyTitle ? "flex" : "none",
       }}
       animate={{
         opacity: submittingStoryTitle ? [1, 0] : [0, 1],
       }}
       transition={{
         ease: "easeInOut",
-        duration: screenTransitionDuration,
-        delay: 0,
+        duration: 1,
+        delay: 1,
       }}
     >
       <VStack h="100%" pt="20%" spacing="30px">
