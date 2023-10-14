@@ -64,7 +64,7 @@ const AppStateContextProvider = ({
   const [act3Content, setAct3Content] = useState<string | undefined>(undefined);
   const [whichAct, setWhichAct] = useState(0);
 
-  const handleGenerateAct = (prompt: string, prompt2?: string) => {
+  const handleGenerateAct = async (prompt: string, prompt2?: string) => {
     // Generate the act of the story
 
     setGenerating(true);
@@ -89,10 +89,20 @@ const AppStateContextProvider = ({
       setWhichAct(1);
     }
 
+    /**
+     * First we set generating finished to true so it fades out
+     *
+     * Then we set generating to false so it is removed from the dom
+     *
+     */
+
     setTimeout(() => {
       setGeneratingFinished(true);
-      setGenerating(false);
     }, 1000);
+
+    setTimeout(() => {
+      setGenerating(false);
+    }, 2000);
   };
 
   return (

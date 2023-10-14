@@ -11,8 +11,7 @@ import { useState } from "react";
 const StoryTitleSubmission = () => {
   const toast = useToast();
 
-  const { setGenerating, handleGenerateAct, apiKey, storyTitle } =
-    useAppContext();
+  const { handleGenerateAct, apiKey, storyTitle } = useAppContext();
 
   const [storyTitleInput, setStoryTitleInput] = useState<string | undefined>(
     undefined
@@ -23,6 +22,8 @@ const StoryTitleSubmission = () => {
 
   const [submittingStoryIntroduction, setSubmittingStoryIntroduction] =
     useState(false);
+
+  const [introSubmitted, setIntroSubmitted] = useState(false);
 
   const handleSubmitStoryTitle = () => {
     if (!storyTitleInput || !storyIntroductionInput) {
@@ -37,6 +38,11 @@ const StoryTitleSubmission = () => {
 
     setSubmittingStoryIntroduction(true);
 
+    // This handles fading it out
+    setTimeout(() => {
+      setIntroSubmitted(true);
+    }, 1000);
+
     setTimeout(() => {
       handleGenerateAct(
         storyTitleInput as string,
@@ -44,7 +50,6 @@ const StoryTitleSubmission = () => {
       );
       setStoryTitleInput(undefined);
       setSubmittingStoryIntroduction(false);
-      setGenerating(true);
     }, 1000);
   };
 
@@ -54,7 +59,8 @@ const StoryTitleSubmission = () => {
       <motion.div
         style={{
           opacity: 0,
-          display: apiKey && !storyTitle ? "flex" : "none",
+          display:
+            apiKey && !storyTitle ? "flex" : introSubmitted ? "none" : "none",
         }}
         animate={{
           opacity: submittingStoryIntroduction ? [1, 0] : [0, 1],

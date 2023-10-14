@@ -58,12 +58,7 @@ const GameplayContainer = () => {
               <APIKeySubmission />
               <StoryTitleSubmission />
 
-              {generating && (
-                <GeneratingLoadingUI
-                  label={"the introduction of your story"}
-                  screenTransitionDuration={screenTransitionDuration}
-                />
-              )}
+              <GeneratingLoadingUI label={"the introduction of your story"} />
 
               {!generating && storyTitle && <CurrentArcUI />}
             </motion.div>
