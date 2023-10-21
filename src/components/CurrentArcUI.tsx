@@ -2,6 +2,7 @@ import { VStack, Text, Flex, Textarea, useToast } from "@chakra-ui/react";
 import StaticAppButton from "./StaticAppButton";
 import { useAppContext } from "../contexts/AppStateContext";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 /**
  * UI displayed  for the current arc of the story
@@ -9,11 +10,21 @@ import { useEffect, useState } from "react";
  * for the user
  */
 const CurrentArcUI = () => {
-  const { handleGenerateAct, whichAct, intro, act1Content, act2Content } =
-    useAppContext();
+  const {
+    handleGenerateAct,
+    whichAct,
+    intro,
+    act1Content,
+    act2Content,
+    generatingFinished,
+    generating,
+    storyTitle,
+  } = useAppContext();
 
   const [promptInput, setPromptInput] = useState<string | undefined>();
   const [actDisplayed, setActDisplayed] = useState<string | undefined>();
+
+  const [submitting, setSubmitting] = useState<boolean>(false);
 
   const toast = useToast();
 
@@ -27,7 +38,11 @@ const CurrentArcUI = () => {
       return;
     }
 
-    handleGenerateAct(promptInput);
+    setSubmitting(true);
+
+    setTimeout(() => {
+      handleGenerateAct(promptInput);
+    }, 1000);
   };
 
   const actContent: Record<number, any> = {
@@ -43,64 +58,79 @@ const CurrentArcUI = () => {
   }, [whichAct]);
 
   return (
-    <VStack h="100%" spacing="10" pt="100px">
-      <Text fontFamily="YsabeauInfant" color="white" fontSize="28px">
-        {" "}
-        {actContent[whichAct].titleText}
-      </Text>
-      <Flex
-        maxH="45vh"
-        overflowY="auto"
-        py="30px"
-        px="10%"
-        paddingBottom="50px"
-        sx={{
-          "&::-webkit-scrollbar": {
-            w: "3",
-            mr: "10",
-          },
-          "&::-webkit-scrollbar-track": {
-            w: "2",
-          },
-          "&::-webkit-scrollbar-thumb": {
-            borderRadius: "10",
-            bg: "white",
-          },
-        }}
-      >
-        <Text fontFamily="YsabeauInfant" color="white" fontSize="16px">
-          {actDisplayed}
+    <motion.div
+      style={{
+        opacity: 0,
+        display: !generating && storyTitle ? "flex" : "none",
+      }}
+      animate={{
+        opacity: submitting ? [1, 0] : generatingFinished ? [0, 1] : [1, 0],
+      }}
+      transition={{
+        ease: "easeInOut",
+        duration: 1,
+        delay: 0,
+      }}
+    >
+      <VStack h="100%" spacing="10" pt="100px" w="100%">
+        <Text fontFamily="YsabeauInfant" color="white" fontSize="28px">
+          {" "}
+          {actContent[whichAct].titleText}
         </Text>
-      </Flex>
-
-      <VStack w="100%">
-        <Text
-          fontFamily="YsabeauInfant"
-          color="white"
-          fontSize="20px"
-          mb="20px"
+        <Flex
+          maxH="45vh"
+          overflowY="auto"
+          py="30px"
+          px="10%"
+          paddingBottom="50px"
+          sx={{
+            "&::-webkit-scrollbar": {
+              w: "3",
+              mr: "10",
+            },
+            "&::-webkit-scrollbar-track": {
+              w: "2",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              borderRadius: "10",
+              bg: "white",
+            },
+          }}
         >
-          What happens in the {actContent[whichAct].promptText} act of the
-          story?
-        </Text>
-        <Textarea
-          border="2px solid white"
-          w="80%"
-          textColor="white"
-          fontSize="16px"
-          h="100px"
-          mb="30px"
-          fontFamily="YsabeauInfant"
-          onChange={(e) => setPromptInput(e.target.value)}
-        />
-        <StaticAppButton
-          height={60}
-          width={200}
-          action={handleSubmit}
-          label="SUBMIT"
-        />
+          <Text fontFamily="YsabeauInfant" color="white" fontSize="16px">
+            {actDisplayed}
+          </Text>
+        </Flex>
+
+        <VStack w="100%">
+          <Text
+            fontFamily="YsabeauInfant"
+            color="white"
+            fontSize="20px"
+            mb="20px"
+          >
+            What happens in the {actContent[whichAct].promptText} act of the
+            story?
+          </Text>
+          <Textarea
+            border="2px solid white"
+            w="80%"
+            textColor="white"
+            fontSize="16px"
+            h="100px"
+            mb="30px"
+            fontFamily="YsabeauInfant"
+            onChange={(e) => setPromptInput(e.target.value)}
+          />
+          <StaticAppButton
+            height={60}
+            width={200}
+            action={handleSubmit}
+            label="SUBMIT"
+          />
+        </VStack>
       </VStack>
-    </VStack>
+    </motion.div>
   );
 };
 
