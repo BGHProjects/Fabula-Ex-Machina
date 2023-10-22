@@ -38,6 +38,9 @@ interface IAppStateContext {
   setAct2Content: Dispatch<SetStateAction<string | undefined>>;
   act3Content: string | undefined;
   setAct3Content: Dispatch<SetStateAction<string | undefined>>;
+  restartGame: () => void;
+  generatingError: boolean;
+  setGeneratingError: Dispatch<SetStateAction<boolean>>;
 }
 
 const AppStateContext = createContext<IAppStateContext>({} as IAppStateContext);
@@ -63,6 +66,7 @@ const AppStateContextProvider = ({
   const [act2Content, setAct2Content] = useState<string | undefined>(undefined);
   const [act3Content, setAct3Content] = useState<string | undefined>(undefined);
   const [whichAct, setWhichAct] = useState(0);
+  const [generatingError, setGeneratingError] = useState(false);
 
   const handleGenerateAct = async (prompt: string, prompt2?: string) => {
     // Generate the act of the story
@@ -72,14 +76,18 @@ const AppStateContextProvider = ({
 
     // Just for testing purposes
     if (whichAct === 3) {
-      setAct3Content("Third Act Content");
+      setAct3Prompt(prompt);
+      setAct3Content("Third Act Content" + loremIpsum);
+      setWhichAct(4);
     }
     if (whichAct === 2) {
-      setAct2Content("Second Act Content");
+      setAct2Prompt(prompt);
+      setAct2Content("Second Act Content" + loremIpsum);
       setWhichAct(3);
     }
     if (whichAct === 1) {
-      setAct1Content("First Act Content");
+      setAct1Prompt(prompt);
+      setAct1Content("First Act Content" + loremIpsum);
       setWhichAct(2);
     }
     if (whichAct === 0) {
@@ -103,6 +111,23 @@ const AppStateContextProvider = ({
     setTimeout(() => {
       setGenerating(false);
     }, 2000);
+  };
+
+  const restartGame = () => {
+    setPlayingGame(false);
+    setWhichAct(0);
+
+    setAPIKey(undefined);
+    setStoryTitle(undefined);
+    setStoryIntroPrompt(undefined);
+    setIntro(undefined);
+    setAct1Prompt(undefined);
+    setAct1Content(undefined);
+    setAct2Prompt(undefined);
+    setAct2Content(undefined);
+    setAct3Prompt(undefined);
+    setAct3Content(undefined);
+    setGeneratingError(false);
   };
 
   return (
@@ -137,6 +162,9 @@ const AppStateContextProvider = ({
         setAct3Content,
         whichAct,
         setWhichAct,
+        restartGame,
+        generatingError,
+        setGeneratingError,
       }}
     >
       {children}

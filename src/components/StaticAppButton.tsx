@@ -8,6 +8,7 @@ export interface IStaticAppButton {
   height?: number;
   action: () => void;
   label: string;
+  fontSize?: number;
 }
 
 const hslWhite = "hsl(0, 0, 100)";
@@ -19,6 +20,7 @@ const hslBlack = "hsl(0,0,0)";
 const StaticAppButton = ({
   width = 200,
   height = 80,
+  fontSize = 24,
   action,
   label,
 }: IStaticAppButton) => {
@@ -54,7 +56,8 @@ const StaticAppButton = ({
           style={{
             color: hslWhite,
             fontFamily: "YsabeauInfant",
-            fontSize: "24px",
+            fontSize: `${fontSize}px`,
+            textAlign: "center",
           }}
           animate={{
             color: handleHoverState(hslWhite, hslBlack) as any,

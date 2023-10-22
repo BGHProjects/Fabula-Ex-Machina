@@ -102,11 +102,11 @@ const StoryTitleSubmission = () => {
             placeholder="Story Title"
             fontFamily="YsabeauInfant"
           />
-          (
+
           <Text my="-5" color="white" w="80%" fontFamily="YsabeauInfant">
             {storyIntroductionInput?.length ?? 0} / 200
           </Text>
-          )
+
           <Textarea
             border="2px solid white"
             w="80%"

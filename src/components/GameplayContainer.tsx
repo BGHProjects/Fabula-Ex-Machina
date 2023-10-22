@@ -6,6 +6,7 @@ import APIKeySubmission from "./APIKeySubmission";
 import StoryTitleSubmission from "./StoryTitleSubmission";
 import GeneratingLoadingUI from "./GeneratingLoadingUI";
 import CurrentArcUI from "./CurrentArcUI";
+import GeneratingErrorUI from "./GeneratingErrorUI";
 
 const screenTransitionDuration = 1;
 
@@ -57,10 +58,9 @@ const GameplayContainer = () => {
             >
               <APIKeySubmission />
               <StoryTitleSubmission />
-
-              <GeneratingLoadingUI label={"the introduction of your story"} />
-
+              <GeneratingLoadingUI />
               {!generating && storyTitle && <CurrentArcUI />}
+              <GeneratingErrorUI />
             </motion.div>
           </>
         )}
