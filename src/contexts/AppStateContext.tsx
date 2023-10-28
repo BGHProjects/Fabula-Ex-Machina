@@ -4,9 +4,13 @@ import {
   SetStateAction,
   createContext,
   useContext,
+  useEffect,
   useState,
 } from "react";
-import { loremIpsum } from "../constants/loremIpsum";
+import { OpenAI } from "langchain/llms/openai";
+import { BufferMemory } from "langchain/memory";
+import { ConversationChain } from "langchain/chains";
+import { ChatPromptTemplate, MessagesPlaceholder } from "langchain/prompts";
 
 interface IAppStateContext {
   playingGame: boolean;
@@ -21,7 +25,7 @@ interface IAppStateContext {
   setStoryTitle: Dispatch<SetStateAction<string | undefined>>;
   storyIntroPrompt: string | undefined;
   setStoryIntroPrompt: Dispatch<SetStateAction<string | undefined>>;
-  handleGenerateAct: (prompt: string, prompt2?: string) => void;
+  handleGenerateAct: (prompt: string, prompt2?: string) => Promise<void>;
   intro: string | undefined;
   setIntro: Dispatch<SetStateAction<string | undefined>>;
   whichAct: number;
@@ -67,50 +71,120 @@ const AppStateContextProvider = ({
   const [act3Content, setAct3Content] = useState<string | undefined>(undefined);
   const [whichAct, setWhichAct] = useState(0);
   const [generatingError, setGeneratingError] = useState(false);
+  const [chain, setChain] = useState<ConversationChain | undefined>(undefined);
+
+  const modelTemplate =
+    "You are StoryGPT. You are to write an epic story consisting of an introduction, a first act, a second act, and a third part. Each of these parts must be no longer than 300 words. Each of these parts will be based on a prompt that is given to you by the user. Just include the raw text of the part of the story in your response. Do not include any formatting strings in your response, including \n or \t.";
+  const humanTemplate =
+    "Get ready to generate the next part of the story. {input}";
+
+  const chatPrompt = ChatPromptTemplate.fromMessages([
+    ["system", modelTemplate],
+    new MessagesPlaceholder("history"),
+    ["human", humanTemplate],
+  ]);
+
+  const createChain = () => {
+    const model = new OpenAI({
+      openAIApiKey: apiKey,
+      temperature: 0.9,
+      modelName: "gpt-3.5-turbo",
+    });
+    const memory = new BufferMemory({
+      returnMessages: true,
+      memoryKey: "history",
+    });
+    const newChain = new ConversationChain({
+      llm: model,
+      memory: memory,
+      prompt: chatPrompt,
+    });
+    setChain(newChain);
+  };
+
+  useEffect(() => {
+    if (apiKey) createChain();
+  }, [apiKey]);
 
   const handleGenerateAct = async (prompt: string, prompt2?: string) => {
-    // Generate the act of the story
+    try {
+      // Generate the act of the story
 
-    setGenerating(true);
-    setGeneratingFinished(false);
+      setGenerating(true);
+      setGeneratingFinished(false);
 
-    // Just for testing purposes
-    if (whichAct === 3) {
-      setAct3Prompt(prompt);
-      setAct3Content("Third Act Content" + loremIpsum);
-      setWhichAct(4);
-    }
-    if (whichAct === 2) {
-      setAct2Prompt(prompt);
-      setAct2Content("Second Act Content" + loremIpsum);
-      setWhichAct(3);
-    }
-    if (whichAct === 1) {
-      setAct1Prompt(prompt);
-      setAct1Content("First Act Content" + loremIpsum);
-      setWhichAct(2);
-    }
-    if (whichAct === 0) {
-      setStoryTitle(prompt);
-      setStoryIntroPrompt(prompt2);
-      setIntro(loremIpsum);
-      setWhichAct(1);
-    }
+      // Just for testing purposes
+      if (whichAct === 3) {
+        setAct3Prompt(prompt);
 
-    /**
-     * First we set generating finished to true so it fades out
-     *
-     * Then we set generating to false so it is removed from the dom
-     *
-     */
+        const res = await (chain as ConversationChain).call({
+          input:
+            "Now you are to generate the final act of the story. The prompt to generate is: " +
+            prompt,
+        });
 
-    setTimeout(() => {
+        setAct3Content(res.response);
+        setWhichAct(4);
+      }
+      if (whichAct === 2) {
+        setAct2Prompt(prompt);
+
+        const res = await (chain as ConversationChain).call({
+          input:
+            "Now you are to generate the second act of the story. The prompt to generate is: " +
+            prompt,
+        });
+
+        setAct2Content(res.response);
+        setWhichAct(3);
+      }
+      if (whichAct === 1) {
+        setAct1Prompt(prompt);
+
+        const res = await (chain as ConversationChain).call({
+          input:
+            "Now you are to generate the first act of the story. The prompt to generate is: " +
+            prompt,
+        });
+
+        setAct1Content(res.response);
+        setWhichAct(2);
+      }
+      if (whichAct === 0) {
+        setStoryTitle(prompt);
+        setStoryIntroPrompt(prompt2);
+
+        const res = await (chain as ConversationChain).call({
+          input:
+            "Now you are to generate the introduction to the story. The name of the story is: " +
+            prompt +
+            " and the prompt is this: " +
+            prompt2,
+        });
+
+        setIntro(res.response);
+        setWhichAct(1);
+      }
+
+      /**
+       * First we set generating finished to true so it fades out
+       *
+       * Then we set generating to false so it is removed from the dom
+       *
+       */
+
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       setGeneratingFinished(true);
-    }, 1000);
 
-    setTimeout(() => {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       setGenerating(false);
-    }, 2000);
+    } catch (err) {
+      console.log("Error was this: ", err);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      setGeneratingError(true);
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      setGenerating(false);
+    }
   };
 
   const restartGame = () => {
@@ -128,6 +202,7 @@ const AppStateContextProvider = ({
     setAct3Prompt(undefined);
     setAct3Content(undefined);
     setGeneratingError(false);
+    setChain(undefined);
   };
 
   return (

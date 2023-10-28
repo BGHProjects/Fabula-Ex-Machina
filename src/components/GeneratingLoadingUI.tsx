@@ -10,10 +10,10 @@ const GeneratingLoadingUI = () => {
   const { generatingFinished, generating, whichAct } = useAppContext();
 
   const loadingLabel: Record<number, string> = {
-    1: "the introduction of your story",
-    2: "the first act of your story",
-    3: "the second act of your story",
-    4: "the final act of your story",
+    0: "the introduction of your story",
+    1: "the first act of your story",
+    2: "the second act of your story",
+    3: "the final act of your story",
   };
 
   return (

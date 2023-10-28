@@ -25,7 +25,7 @@ const StoryTitleSubmission = () => {
 
   const [introSubmitted, setIntroSubmitted] = useState(false);
 
-  const handleSubmitStoryTitle = () => {
+  const handleSubmitStoryTitle = async () => {
     if (!storyTitleInput || !storyIntroductionInput) {
       toast({
         title: "Invalid Story Title and Introduction",
@@ -39,18 +39,17 @@ const StoryTitleSubmission = () => {
     setSubmittingStoryIntroduction(true);
 
     // This handles fading it out
-    setTimeout(() => {
-      setIntroSubmitted(true);
-    }, 1000);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    setIntroSubmitted(true);
 
-    setTimeout(() => {
-      handleGenerateAct(
-        storyTitleInput as string,
-        storyIntroductionInput as string
-      );
-      setStoryTitleInput(undefined);
-      setSubmittingStoryIntroduction(false);
-    }, 1000);
+    await handleGenerateAct(
+      storyTitleInput as string,
+      storyIntroductionInput as string
+    );
+
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    setStoryTitleInput(undefined);
+    setSubmittingStoryIntroduction(false);
   };
 
   return (

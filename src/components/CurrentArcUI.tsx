@@ -45,7 +45,7 @@ const CurrentArcUI = () => {
 
   const toast = useToast();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!promptInput) {
       toast({
         title: "Invalid Prompt",
@@ -56,10 +56,7 @@ const CurrentArcUI = () => {
     }
 
     setSubmitting(true);
-
-    setTimeout(() => {
-      handleGenerateAct(promptInput);
-    }, 1000);
+    await handleGenerateAct(promptInput);
   };
 
   const handleViewWholeStory = () => {
