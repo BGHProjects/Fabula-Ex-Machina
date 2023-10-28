@@ -3,9 +3,7 @@
 </br>
 <div align="center">
 <a href="https://react.dev/"><img src="./src/readmecontent/img/stacklogos/React.png" width="75" height="75"></a>
-</div>
 <a href="https://vitejs.dev/"><img src="./src/readmecontent/img/stacklogos/Vite.png" width="75" height="75"></a>
-</div>
 <a href="https://www.typescriptlang.org/"><img src="./src/readmecontent/img/stacklogos/Typescript.png" width="75" height="75"></a>
 <a href="https://vercel.com/"><img src="./src/readmecontent/img/stacklogos/Vercel.png" width="75" height="75"></a>
 <a href="https://chakra-ui.com/"><img src="./src/readmecontent/img/stacklogos/ChakraUI.png" width="75" height="75"></a>
@@ -32,7 +30,7 @@
 
 ## Prompt Engineering
 
-- This proof of concept is a use case for prompt engineering
+- This proof of concept is a use case for [prompt engineering](https://www.promptingguide.ai/)
 - Two key prompts were used when generating responses, specifically:
 
 ### System Prompt
