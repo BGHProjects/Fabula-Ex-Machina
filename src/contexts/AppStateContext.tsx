@@ -107,77 +107,67 @@ const AppStateContextProvider = ({
   }, [apiKey]);
 
   const handleGenerateAct = async (prompt: string, prompt2?: string) => {
+    const actions: Record<number, any> = {
+      0: {
+        setPrompt: () => {
+          setStoryTitle(prompt), setStoryIntroPrompt(prompt2);
+        },
+        chainCall: {
+          input:
+            "Now you are to generate the introduction to the story. The name of the story is: " +
+            prompt +
+            " and the prompt is this: " +
+            prompt2,
+        },
+        setContent: setIntro,
+      },
+      1: {
+        setPrompt: () => setAct1Prompt(prompt),
+        chainCall: {
+          input:
+            "Now you are to generate the first act of the story. The prompt to generate is: " +
+            prompt,
+        },
+        setContent: setAct1Content,
+      },
+      2: {
+        setPrompt: () => setAct2Prompt(prompt),
+        chainCall: {
+          input:
+            "Now you are to generate the second act of the story. The prompt to generate is: " +
+            prompt,
+        },
+        setContent: setAct2Content,
+      },
+      3: {
+        setPrompt: () => setAct3Prompt(prompt),
+        chainCall: {
+          input:
+            "Now you are to generate the final act of the story. The prompt to generate is: " +
+            prompt,
+        },
+        setContent: setAct3Content,
+      },
+    };
+
     try {
       // Generate the act of the story
 
       setGenerating(true);
       setGeneratingFinished(false);
 
-      // Just for testing purposes
-      if (whichAct === 3) {
-        setAct3Prompt(prompt);
-
-        const res = await (chain as ConversationChain).call({
-          input:
-            "Now you are to generate the final act of the story. The prompt to generate is: " +
-            prompt,
-        });
-
-        setAct3Content(res.response);
-        setWhichAct(4);
-      }
-      if (whichAct === 2) {
-        setAct2Prompt(prompt);
-
-        const res = await (chain as ConversationChain).call({
-          input:
-            "Now you are to generate the second act of the story. The prompt to generate is: " +
-            prompt,
-        });
-
-        setAct2Content(res.response);
-        setWhichAct(3);
-      }
-      if (whichAct === 1) {
-        setAct1Prompt(prompt);
-
-        const res = await (chain as ConversationChain).call({
-          input:
-            "Now you are to generate the first act of the story. The prompt to generate is: " +
-            prompt,
-        });
-
-        setAct1Content(res.response);
-        setWhichAct(2);
-      }
-      if (whichAct === 0) {
-        setStoryTitle(prompt);
-        setStoryIntroPrompt(prompt2);
-
-        const res = await (chain as ConversationChain).call({
-          input:
-            "Now you are to generate the introduction to the story. The name of the story is: " +
-            prompt +
-            " and the prompt is this: " +
-            prompt2,
-        });
-
-        setIntro(res.response);
-        setWhichAct(1);
-      }
-
-      /**
-       * First we set generating finished to true so it fades out
-       *
-       * Then we set generating to false so it is removed from the dom
-       *
-       */
+      actions[whichAct].setPrompt();
+      const res = await (chain as ConversationChain).call(
+        actions[whichAct].chainCall
+      );
+      actions[whichAct].setContent(res.response);
 
       await new Promise((resolve) => setTimeout(resolve, 1000));
       setGeneratingFinished(true);
 
       await new Promise((resolve) => setTimeout(resolve, 2000));
       setGenerating(false);
+      setWhichAct(whichAct + 1);
     } catch (err) {
       console.log("Error was this: ", err);
       await new Promise((resolve) => setTimeout(resolve, 1000));

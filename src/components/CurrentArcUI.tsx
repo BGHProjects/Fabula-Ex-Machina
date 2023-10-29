@@ -5,6 +5,7 @@ import {
   Textarea,
   useToast,
   HStack,
+  chakra,
 } from "@chakra-ui/react";
 import StaticAppButton from "./StaticAppButton";
 import { useAppContext } from "../contexts/AppStateContext";
@@ -83,6 +84,12 @@ const CurrentArcUI = () => {
     if (whichAct === 4) setActDisplayed(act3Content);
   }, [whichAct]);
 
+  const finalButtonStyles = {
+    height: 80,
+    width: 200,
+    fontSize: 18,
+  };
+
   return (
     <motion.div
       style={{
@@ -128,73 +135,35 @@ const CurrentArcUI = () => {
           }}
         >
           {!showWholeStory && !showWholeStoryWithPrompts && (
-            <Text fontFamily="YsabeauInfant" color="white" fontSize="16px">
-              {actDisplayed}
-            </Text>
+            <Base16Text>{actDisplayed}</Base16Text>
           )}
           {showWholeStory && (
             <VStack spacing={10}>
-              <Text fontFamily="YsabeauInfant" color="white" fontSize="16px">
-                {intro}
-              </Text>
-              <Text fontFamily="YsabeauInfant" color="white" fontSize="16px">
-                {act1Content}
-              </Text>
-              <Text fontFamily="YsabeauInfant" color="white" fontSize="16px">
-                {act2Content}
-              </Text>
-              <Text fontFamily="YsabeauInfant" color="white" fontSize="16px">
-                {act3Content}
-              </Text>
+              <Base16Text>{intro}</Base16Text>
+              <Base16Text>{act1Content}</Base16Text>
+              <Base16Text>{act2Content}</Base16Text>
+              <Base16Text>{act3Content}</Base16Text>
             </VStack>
           )}
           {showWholeStoryWithPrompts && (
             <VStack spacing={10}>
-              <Text
-                fontFamily="YsabeauInfant"
-                color="white"
-                fontSize="16px"
-                w="100%"
-              >
+              <Base16Text w="100%">
                 Story Intro Prompt:{" "}
                 <Text fontStyle="italic">{storyIntroPrompt}</Text>
-              </Text>
-              <Text fontFamily="YsabeauInfant" color="white" fontSize="16px">
-                {intro}
-              </Text>
-              <Text
-                fontFamily="YsabeauInfant"
-                color="white"
-                fontSize="16px"
-                w="100%"
-              >
+              </Base16Text>
+              <Base16Text>{intro}</Base16Text>
+              <Base16Text w="100%">
                 Act 1 Prompt: <Text fontStyle="italic">{act1Prompt}</Text>
-              </Text>
-              <Text fontFamily="YsabeauInfant" color="white" fontSize="16px">
-                {act1Content}
-              </Text>
-              <Text
-                fontFamily="YsabeauInfant"
-                color="white"
-                fontSize="16px"
-                w="100%"
-              >
+              </Base16Text>
+              <Base16Text>{act1Content}</Base16Text>
+              <Base16Text w="100%">
                 Act 2 Prompt: <Text fontStyle="italic">{act2Prompt}</Text>
-              </Text>
-              <Text fontFamily="YsabeauInfant" color="white" fontSize="16px">
-                {act2Content}
-              </Text>
-              <Text
-                fontFamily="YsabeauInfant"
-                color="white"
-                fontSize="16px"
-                w="100%"
-              >
+              </Base16Text>
+              <Base16Text>{act2Content}</Base16Text>
+              <Base16Text w="100%">
                 Act 3 Prompt: <Text fontStyle="italic">{act3Prompt}</Text>
-              </Text>
-              <Text fontFamily="YsabeauInfant" color="white" fontSize="16px">
-                {act3Content}
-              </Text>
+              </Base16Text>
+              <Base16Text>{act3Content}</Base16Text>
             </VStack>
           )}
         </Flex>
@@ -253,23 +222,17 @@ const CurrentArcUI = () => {
               justifyContent="space-between"
             >
               <StaticAppButton
-                height={80}
-                width={200}
-                fontSize={18}
+                {...finalButtonStyles}
                 action={handleViewWholeStory}
                 label="View Full Story"
               />
               <StaticAppButton
-                height={80}
-                width={200}
-                fontSize={18}
+                {...finalButtonStyles}
                 action={handleViewWholeStoryWithPrompts}
                 label="View Full Story With Prompts"
               />
               <StaticAppButton
-                height={80}
-                width={200}
-                fontSize={18}
+                {...finalButtonStyles}
                 action={restartGame}
                 label="Play Again"
               />
@@ -280,5 +243,13 @@ const CurrentArcUI = () => {
     </motion.div>
   );
 };
+
+const Base16Text = chakra(Text, {
+  baseStyle: {
+    fontFamily: "YsabeauInfant",
+    color: "white",
+    fontSize: "16px",
+  },
+});
 
 export default CurrentArcUI;

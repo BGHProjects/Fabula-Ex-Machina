@@ -22,6 +22,7 @@
 - There are several limitations put in place for this proof of concept, includes a maximum of 200 characters for a response, prompt engineering to ensure that the LLM only produces a response of 300 maximum words, and only three acts of story writing. This is to reduce the amount of tokens used in the API calls when playing the game, as the game itself is only a proof of concept
 - The background creative coding sketch was adapted from [this sketch](https://openprocessing.org/sketch/1597047) by [Samuel Yan](https://openprocessing.org/user/293890?view=sketches&o=48)
 - The model that the LLM uses is [gpt 3.5. turbo](https://platform.openai.com/docs/models/gpt-3-5)
+- Play the game [here](https://fabula-ex-machina.vercel.app/)
 
 ## DISCLAIMER: Client-Side Submission of API Key
 
@@ -41,3 +42,57 @@
 ### User Input Prompt
 
 - The user's input was transposed into a template that was delivered to the LLM, including affixing which stage of the story that this input was in relation to, in order to properly contextualise the LLM's output
+
+## Screenshots
+
+### Main Menu
+
+<div><img src="./src/readmecontent/img/screenshots/MainMenu.PNG" alt="MainMenu" /></div>
+
+### API Key Submission
+
+<div><img src="./src/readmecontent/img/screenshots/APIKeySubmit.PNG" alt="ApiKeySubmit" /></div>
+
+### Intro Prompt Example
+
+<div><img src="./src/readmecontent/img/screenshots/IntroPrompt.PNG" alt="IntroPrompt" /></div>
+
+### Intro Loading Screen
+
+<div><img src="./src/readmecontent/img/screenshots/IntroLoadingScreen.PNG" alt="IntroLoadingScreen" /></div>
+
+### First Act Prompt Example
+
+<div><img src="./src/readmecontent/img/screenshots/FirstActPrompt.PNG" alt="FirstActPrompt" /></div>
+
+### First Act Loading Screen
+
+<div><img src="./src/readmecontent/img/screenshots/FirstActLoadingScreen.PNG" alt="FirstActLoadingScreen" /></div>
+
+### Second Act Prompt Example
+
+<div><img src="./src/readmecontent/img/screenshots/SecondActPrompt.PNG" alt="SecondActPrompt" /></div>
+
+### Second Act Loading Screen
+
+<div><img src="./src/readmecontent/img/screenshots/SecondActLoadingScreen.PNG" alt="SecondActLoadingScreen" /></div>
+
+### Third Act Prompt Example
+
+<div><img src="./src/readmecontent/img/screenshots/ThirdActPrompt.PNG" alt="ThirdActPrompt" /></div>
+
+### Third Act Loading Screen
+
+<div><img src="./src/readmecontent/img/screenshots/ThirdActLoadingScreen.PNG" alt="ThirdActLoadingScreen" /></div>
+
+### Third Act Content Example
+
+<div><img src="./src/readmecontent/img/screenshots/ThirdActContent.PNG" alt="ThirdActContent" /></div>
+
+### Full Story Example
+
+<div><img src="./src/readmecontent/img/screenshots/FullStoryExample.PNG" alt="FullStoryExample" /></div>
+
+### Full Story With Prompts Example
+
+<div><img src="./src/readmecontent/img/screenshots/FullStoryWithPromptsExample.PNG" alt="FullStoryWithPromptsExample" /></div>

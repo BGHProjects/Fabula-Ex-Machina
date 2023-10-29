@@ -40,9 +40,6 @@ const GameplayContainer = () => {
               animDelay={screenTransitionDuration * 2}
               action={() => setPlayingGame(false)}
             />
-            {/**
-             * Container that holds all the content
-             */}
             <motion.div
               style={{
                 opacity: 0,
