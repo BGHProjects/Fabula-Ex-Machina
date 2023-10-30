@@ -47,7 +47,11 @@
 
 ## Gameplay Walthrough
 
-[![Watch the video](https://img.youtube.com/vi/HtK8fqHSuGk/default.jpg)](https://youtu.be/HtK8fqHSuGk)
+<div align="center">
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=HtK8fqHSuGk" target="_blank">
+ <img src="http://img.youtube.com/vi/HtK8fqHSuGk/mqdefault.jpg" alt="Watch the video" width="400" height="260" border="10" />
+</a>
+</div>
 
 ## Screenshots
 
