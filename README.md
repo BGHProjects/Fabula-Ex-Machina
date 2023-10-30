@@ -47,7 +47,7 @@
 
 ## Gameplay Walthrough
 
-[<img src="https://img.youtube.com/vi/HtK8fqHSuGk/maxresdefault.jpg" width="50%">](https://youtu.be/HtK8fqHSuGk)
+[![<img src="https://img.youtube.com/vi/HtK8fqHSuGk/maxresdefault.jpg" width="50%">]](https://youtu.be/HtK8fqHSuGk)
 
 ## Screenshots
 
