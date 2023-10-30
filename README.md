@@ -45,13 +45,7 @@
 
 - The user's input was transposed into a template that was delivered to the LLM, including affixing which stage of the story that this input was in relation to, in order to properly contextualise the LLM's output
 
-## Gameplay Walthrough
-
-<div align="center">
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=HtK8fqHSuGk" target="_blank">
- <img src="http://img.youtube.com/vi/HtK8fqHSuGk/mqdefault.jpg" alt="Watch the video" width="400" height="260" border="10" />
-</a>
-</div>
+## [Gameplay Walthrough](http://www.youtube.com/watch?feature=player_embedded&v=HtK8fqHSuGk)
 
 ## Screenshots
 
