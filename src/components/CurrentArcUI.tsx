@@ -70,12 +70,14 @@ const CurrentArcUI = () => {
     setShowWholeStoryWithPrompts(true);
   };
 
-  const actContent: Record<number, any> = {
-    1: { promptText: "first", titleText: "Introduction" },
-    2: { promptText: "second", titleText: "Act One" },
-    3: { promptText: "final", titleText: "Act Two" },
-    4: { promptText: "N/A", titleText: "Act Three" },
-  };
+  const actContent: Record<number, { promptText: string; titleText: string }> =
+    {
+      0: { promptText: "", titleText: "" },
+      1: { promptText: "first", titleText: "Introduction" },
+      2: { promptText: "second", titleText: "Act One" },
+      3: { promptText: "final", titleText: "Act Two" },
+      4: { promptText: "N/A", titleText: "Act Three" },
+    };
 
   useEffect(() => {
     if (whichAct === 1) setActDisplayed(intro);

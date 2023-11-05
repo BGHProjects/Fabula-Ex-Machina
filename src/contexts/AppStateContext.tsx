@@ -76,7 +76,7 @@ const AppStateContextProvider = ({
   const modelTemplate =
     "You are StoryGPT. You are to write an epic story consisting of an introduction, a first act, a second act, and a third part. Each of these parts must be no longer than 300 words. Each of these parts will be based on a prompt that is given to you by the user. Just include the raw text of the part of the story in your response. Do not include any formatting strings in your response, including \n or \t.";
   const humanTemplate =
-    "Get ready to generate the next part of the story. {input}";
+    "Get ready to generate the next part of the story. Remember to limit your response to no longer than 300 words. {input}";
 
   const chatPrompt = ChatPromptTemplate.fromMessages([
     ["system", modelTemplate],
