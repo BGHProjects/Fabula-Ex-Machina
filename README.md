@@ -47,7 +47,7 @@
 
 ## Gameplay Walthrough
 
-<video src='http://www.youtube.com/watch?feature=player_embedded&v=HtK8fqHSuGk' width=180>
+<iframe width="640" height="480" src="//www.youtube.com/embed/HtK8fqHSuGk?rel=0&modestbranding=1" frameborder="0" allowfullscreen></iframe>
 
 ## Screenshots
 
