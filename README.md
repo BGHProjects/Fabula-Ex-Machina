@@ -45,7 +45,9 @@
 
 - The user's input was transposed into a template that was delivered to the LLM, including affixing which stage of the story that this input was in relation to, in order to properly contextualise the LLM's output
 
-## [Gameplay Walthrough](http://www.youtube.com/watch?feature=player_embedded&v=HtK8fqHSuGk)
+## Gameplay Walthrough
+
+<video src='http://www.youtube.com/watch?feature=player_embedded&v=HtK8fqHSuGk' width=180 />
 
 ## Screenshots
 
