@@ -47,7 +47,7 @@
 
 ## Gameplay Walthrough
 
-<iframe width="640" height="480" src="//www.youtube.com/embed/HtK8fqHSuGk?rel=0&modestbranding=1" frameborder="0" allowfullscreen></iframe>
+[![Gameplay Walkthrough](https://img.youtube.com/vi/HtK8fqHSuGk/0.jpg)](https://www.youtube.com/watch?v=HtK8fqHSuGk "Gameplay Walkthrough")
 
 ## Screenshots
 
